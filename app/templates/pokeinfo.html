@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container col-4 border mt-5">
+    <h1>Get Pokemon Info</h1>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+
+        {{ form.poke_name.label(class='form-label') }}
+        {{ form.poke_name(class='form-control', placeholder='Enter name of Pokemon...') }}
+        <div class="d-grid gap-2 my-3">
+            {{ form.submit(class='btn btn-primary') }}
+        </div>
+    </form>
+    {% if pokemon_info %}
+        <b>{{ "NAME: " }}</b> {{ pokemon_info['name'].title() }}<br>
+        <b>{{ "BASE HP: " }}</b> {{ pokemon_info['base hp stat'] }}<br>
+        <b>{{ "BASE DEFENSE: " }}</b> {{ pokemon_info['base defense'] }}<br>
+        <b>{{ "BASE ATTACK: " }}</b> {{ pokemon_info['base attack'] }}<br>
+        <b>{{ "ABILITY: " }}</b> {{ pokemon_info['ability'].title() }}<br>
+        <img src="{{ pokemon_info['image'] }}" alt="{{ pokemon_info['name'].title() }} Image"><br>
+    {% else %}
+        {% if form.is_submitted() %}
+            <p><b>POKEMON NOT FOUND</b></p>
+        {% endif %}
+    {% endif %}
+</div>
+{% endblock %}
