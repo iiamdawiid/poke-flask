@@ -51,8 +51,8 @@ def signup():
     if request.method == 'POST':
         print("POST REQUEST MADE")
         if form.validate():
-            first_name = form.first_name.data
-            last_name = form.last_name.data
+            first_name = form.first_name.data.title()
+            last_name = form.last_name.data.title()
             email = form.email.data 
             password = form.password.data
 
@@ -94,3 +94,8 @@ def login():
                 flash("INVALID EMAIL OR PASSWORD. TRY AGAIN")
     
     return render_template('login.html', form=form)
+
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
