@@ -44,7 +44,7 @@ def get_poke_info():
             poke_dict = get_pokemon(poke_name)
 
             if not poke_dict:
-                flash('POKEMON NOT FOUND', 'danger')
+                flash('Pokemon not found. Please try again.', 'danger')
                 return redirect(url_for('pokemoninfo'))
             else:
                 # store the pokemon in the database later 

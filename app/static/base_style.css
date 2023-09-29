@@ -7,7 +7,8 @@ body {
 }
 
 #forms {
-    background-color: white; 
+    background-color: white;
+    box-shadow: 0px 10px 50px blue;
 }
 
 .content-container {
@@ -17,12 +18,33 @@ body {
     top: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 60%; 
+    width: 65%; 
     min-height: 100vh; 
     z-index: 1;
+    border: 1px solid black;
+    box-shadow: 0px 10px 100px yellow;
 }
 
 .centered-content {
     text-align: center;
     margin-top: 80px;
+}
+
+/* .pika-img {
+    max-width: 50%; 
+    max-height: 50%; 
+    display: block; 
+    margin: 0 auto;
+} */
+
+.image-row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap; /* Allow images to wrap to the next line if necessary */
+    padding: 90px 0; 
+}
+
+.image-row img {
+    max-width: calc(33.33% - 10px); /* Adjust the width as needed and consider margin/padding */
+    margin: 5px; 
 }

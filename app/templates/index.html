@@ -2,11 +2,20 @@
 
 {% block content %}
 
-<div class="content-container">
+<div class="content-container" style="z-index: -1;">
     {% if current_user.is_authenticated %}
         <br>
         <br>
-        <h1 style="color: blue; text-align: center;">Click on Pokemon Info at the top!</h1>
+        <div class="centered-content">
+            <h1 style="color: #07d600; text-align: center;">Welcome! Click on Pokemon Info!</h1>
+            <h5>temporary page - improve later</h5>
+        </div>
+
+        <div class="image-row">
+            <img src="../static/pikachu1.png" alt="Image 1">
+            <img src="../static/pikachu2.png" alt="Image 2">
+            <img src="../static/pikachu1-flipped.png" alt="Image 3">
+        </div>
     {% else %}
         <br>
         <br>
@@ -14,7 +23,14 @@
             <h1>Pokemon Flask Application!</h1>
             <h4 style="color: red;">Click Get Started at the top to Sign Up or Log In!</h4>
             <h5>temporary home page - create a better home page later</h5>
-        </div>  
+            <!-- <img class="pika-img" src="../static/pikachu1.png" alt="Pikachu"> -->
+        </div>
+        
+        <div class="image-row">
+            <img src="../static/pikachu1.png" alt="Image 1">
+            <img src="../static/pikachu2.png" alt="Image 2">
+            <img src="../static/pikachu1-flipped.png" alt="Image 3">
+        </div>
     {% endif %}
 </div>
 
