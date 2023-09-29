@@ -25,3 +25,4 @@ class EditProfileForm(FlaskForm):
     password = PasswordField(label='New Password', validators=[validators.Optional()])
     confirm_password = PasswordField(label='Confirm New Password', validators=[validators.Optional()])
     submit = SubmitField()
+    submit = SubmitField()

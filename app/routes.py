@@ -128,7 +128,16 @@ def logout():
 def editprofile():
     form = EditProfileForm()
     if request.method == 'POST':
-        if form.validate():
+        if 'delete_account' in request.form:
+            deleted_user = User.query.get(current_user.id)
+            db.session.delete(deleted_user)
+            db.session.commit()
+
+            logout_user()
+            flash('Account successfully deleted.', 'danger')
+            return redirect(url_for('login'))
+
+        elif form.validate():
             new_email = form.email.data
             new_password = form.password.data
            
@@ -149,7 +158,7 @@ def editprofile():
 
             db.session.commit()
             return redirect(url_for('editprofile'))
-        
+
         else:
             flash("Password's or Email's do not match. Please try again", 'danger')
             return redirect(url_for('editprofile'))
