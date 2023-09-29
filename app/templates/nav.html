@@ -11,7 +11,7 @@
             <a class="nav-link disabled text-white" aria-disabled="true">Hello, {{ current_user.first_name.title() }}</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/logout" style="color:white;" onmouseover="this.style.color='red';" onmouseout="this.style.color='white';">Logout</a>
+            <a style="color: white;"class="nav-link active" aria-current="page" href="/editprofile" onmouseover="this.style.color='#09de1a';" onmouseout="this.style.color='white';">Edit Profile</a>
           </li>
           <li class="nav-item">
             <a style="color: yellow;"class="nav-link active" aria-current="page" href="/pokemoninfo" onmouseover="this.style.color='#09de1a';" onmouseout="this.style.color='yellow';">Pokemon Info</a>
@@ -24,6 +24,9 @@
           </li>
           <li class="nav-item">
             <a style="color: yellow;"class="nav-link active" aria-current="page" href="/pokemoninfo" onmouseover="this.style.color='#09de1a';" onmouseout="this.style.color='yellow';">Coming Soon!</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout" style="color:white;" onmouseover="this.style.color='red';" onmouseout="this.style.color='white';">Logout</a>
           </li>
           <!-- <li class="nav-item">
             <a class="nav-link" href="#">Link</a>

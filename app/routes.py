@@ -1,6 +1,6 @@
 from app import app, db
 from flask import render_template, request, redirect, url_for, flash, session
-from .forms import PokemonForm, SignUpForm, LogInForm
+from .forms import PokemonForm, SignUpForm, LogInForm, EditProfileForm
 import requests as r
 from .models import User
 from flask_login import login_user, logout_user, current_user, login_required
@@ -123,3 +123,35 @@ def logout():
     logout_user()
     flash('You have been logged out.', 'success')
     return redirect(url_for('login'))
+
+@app.route("/editprofile", methods=['GET', 'POST'])
+def editprofile():
+    form = EditProfileForm()
+    if request.method == 'POST':
+        if form.validate():
+            new_email = form.email.data
+            new_password = form.password.data
+           
+            if new_email:
+                user_exists = User.query.filter_by(email=new_email).first()
+                if new_email != current_user.email and not user_exists:
+                    current_user.email = new_email
+                    flash('Success! New email created.', 'success')
+                else:
+                    flash('Please choose a new email.', 'danger')
+
+            if new_password:
+                if new_password != current_user.password:
+                    current_user.password = new_password
+                    flash('Success! New password created.', 'success')
+                else:
+                    flash('Please choose a different password.', 'danger')
+
+            db.session.commit()
+            return redirect(url_for('editprofile'))
+        
+        else:
+            flash("Password's or Email's do not match. Please try again", 'danger')
+            return redirect(url_for('editprofile'))
+ 
+    return render_template('editprofile.html', form=form)

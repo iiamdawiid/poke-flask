@@ -2,19 +2,17 @@
 
 {% block content %}
 <div id="forms" class="container col-4 border mt-5 border border-2 border-dark rounded">
-    <h1 style="text-align: center;">Sign Up</h1>
+    <h2 style="text-align: center;">Edit Profile</h2>
+    <h6 style="text-align: center;">Change Email, Password, or Email + Password</h6>
     <form method="POST">
 
         {{ form.hidden_tag() }}
 
-        {{ form.first_name.label(class='form-label') }}
-        {{ form.first_name(class='form-control', placeholder='First name...') }}
-
-        {{ form.last_name.label(class='form-label') }}
-        {{ form.last_name(class='form-control', placeholder='Last name...') }}
-
         {{ form.email.label(class='form-label') }}
         {{ form.email(class='form-control', placeholder='Email...') }}
+
+        {{ form.confirm_email.label(class='form-label') }}
+        {{ form.confirm_email(class='form-control', placeholder='Confirm Email...') }}
 
         {{ form.password.label(class='form-label') }}
         {{ form.password(class='form-control', placeholder='Password...') }}
