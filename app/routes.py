@@ -43,7 +43,18 @@ def get_poke_info():
             poke_name = form.poke_name.data
             poke_dict = get_pokemon(poke_name)
 
+            if not poke_dict:
+                flash('POKEMON NOT FOUND', 'danger')
+                return redirect(url_for('pokemoninfo'))
+            else:
+                # store the pokemon in the database later 
+                pass
+        else:
+            flash('INVALID FORM', 'danger')
+            return redirect(url_for('pokemoninfo'))
+
     return render_template('pokeinfo.html', form=form, pokemon_info=poke_dict)
+
 
 @app.route("/signup", methods=["POST", "GET"])
 def signup():
@@ -60,16 +71,21 @@ def signup():
             user_exists = User.query.filter_by(email=email).first()
 
             if user_exists:
-                flash("A user with this email already exists. Please use a different email.")
+                print("USER EXISTS")
+                flash("A user with this email already exists. Please use a different email.", 'danger')
                 return redirect(url_for('signup'))
             
-            # if email is clear
-            new_user = User(first_name=first_name, last_name=last_name, email=email, password=password)
-            db.session.add(new_user)
-            db.session.commit()
+            else:
+                new_user = User(first_name=first_name, last_name=last_name, email=email, password=password)
+                db.session.add(new_user)
+                db.session.commit()
 
-            flash('Account created successfully!')
-            return redirect(url_for('login'))
+                flash('Account created successfully!', 'success')
+                return redirect(url_for('login'))
+        
+        else:
+            flash('Passwords do not match. Please try again.', 'danger')
+            return redirect(url_for('signup'))
     
     return render_template('signup.html', form=form)
 
@@ -88,14 +104,22 @@ def login():
             if user and user.password == password:
                 # session['user_id'] = user.id
                 login_user(user)
-                flash("LOGIN SUCCESSFUL")
+                flash("Login Successful", 'success')
                 return redirect(url_for('index'))
+            
             else:
-                flash("INVALID EMAIL OR PASSWORD. TRY AGAIN")
+                flash('Invalid email or password. Please try again.', 'danger')
+                return redirect(url_for('login'))
+
+        else:
+            flash('Invalid Form. Please try again.', 'danger')
+            return redirect(url_for('login'))
     
     return render_template('login.html', form=form)
+
 
 @app.route("/logout")
 def logout():
     logout_user()
+    flash('You have been logged out.', 'success')
     return redirect(url_for('login'))

@@ -2,17 +2,20 @@
 
 {% block content %}
 
-{% if current_user.is_authenticated %}
-    <br>
-    <br>
-    <h1 style="color: blue; text-align: center;">Click on Pokemon Info at the top!</h1>
-{% else %}
-    <br>
-    <br>
-    <div style="text-align: center;">
-        <h1>Pokemon Flask Application!</h1>
-        <h4 style="color: red;">Click Get Started at the top to Sign Up or Log In!</h4>
-    </div>  
-{% endif %}
+<div class="content-container">
+    {% if current_user.is_authenticated %}
+        <br>
+        <br>
+        <h1 style="color: blue; text-align: center;">Click on Pokemon Info at the top!</h1>
+    {% else %}
+        <br>
+        <br>
+        <div class="centered-content">
+            <h1>Pokemon Flask Application!</h1>
+            <h4 style="color: red;">Click Get Started at the top to Sign Up or Log In!</h4>
+            <h5>temporary home page - create a better home page later</h5>
+        </div>  
+    {% endif %}
+</div>
 
 {% endblock %}

@@ -19,10 +19,7 @@
         <b>{{ "BASE ATTACK: " }}</b> {{ pokemon_info['base attack'] }}<br>
         <b>{{ "ABILITY: " }}</b> {{ pokemon_info['ability'].title() }}<br>
         <img src="{{ pokemon_info['image'] }}" alt="{{ pokemon_info['name'].title() }} Image"><br>
-    {% else %}
-        {% if form.is_submitted() %}
-            <p><b>POKEMON NOT FOUND</b></p>
-        {% endif %}
+    
     {% endif %}
 </div>
 {% endblock %}
