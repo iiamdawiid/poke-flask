@@ -1,8 +1,8 @@
 from app import app, db
 from flask import render_template, request, redirect, url_for, flash, session
-from .forms import PokemonForm, SignUpForm, LogInForm, EditProfileForm
+from .forms import PokemonForm, SignUpForm, LogInForm, EditProfileForm, CatchPokemonForm
 import requests as r
-from .models import User
+from .models import User, CatchPokemon
 from flask_login import login_user, logout_user, current_user, login_required
 
 
@@ -10,7 +10,7 @@ from flask_login import login_user, logout_user, current_user, login_required
 def index():
     return render_template('index.html')
 
-
+# for /pokemoninfo
 def get_pokemon(poke_name):
         poke_name = poke_name.lower()
         url = f"https://pokeapi.co/api/v2/pokemon/{poke_name}"
@@ -34,6 +34,7 @@ def get_pokemon(poke_name):
 
 
 @app.route("/pokemoninfo", methods=["GET", "POST"], endpoint='pokemoninfo')
+@login_required
 def get_poke_info():
     form = PokemonForm()
     poke_dict = {}
@@ -46,9 +47,6 @@ def get_poke_info():
             if not poke_dict:
                 flash('Pokemon not found. Please try again.', 'danger')
                 return redirect(url_for('pokemoninfo'))
-            else:
-                # store the pokemon in the database later 
-                pass
         else:
             flash('INVALID FORM', 'danger')
             return redirect(url_for('pokemoninfo'))
@@ -119,17 +117,20 @@ def login():
 
 
 @app.route("/logout")
+@login_required
 def logout():
     logout_user()
     flash('You have been logged out.', 'success')
     return redirect(url_for('login'))
 
 @app.route("/editprofile", methods=['GET', 'POST'])
+@login_required
 def editprofile():
     form = EditProfileForm()
     if request.method == 'POST':
         if 'delete_account' in request.form:
             deleted_user = User.query.get(current_user.id)
+            CatchPokemon.query.filter_by(user_id=current_user.id).delete()
             db.session.delete(deleted_user)
             db.session.commit()
 
@@ -145,12 +146,17 @@ def editprofile():
                 user_exists = User.query.filter_by(email=new_email).first()
                 if new_email != current_user.email and not user_exists:
                     current_user.email = new_email
-                    flash('Success! New email created.', 'success')
+                    flash(f'Success! Email changed to: {new_email}', 'success')
+                elif form.email.data != form.confirm_email.data:
+                    flash("Email's do not match. Please try again.", 'danger')
                 else:
                     flash('Please choose a new email.', 'danger')
 
             if new_password:
-                if new_password != current_user.password:
+                if form.password.data != form.confirm_password.data:
+                    flash("Password's do not match. Please try again.", 'danger')
+                
+                elif new_password != current_user.password:
                     current_user.password = new_password
                     flash('Success! New password created.', 'success')
                 else:
@@ -164,3 +170,84 @@ def editprofile():
             return redirect(url_for('editprofile'))
  
     return render_template('editprofile.html', form=form)
+
+# for /catchpokemons       
+def get_random_pokemon():
+        import random
+        random_pokemon = random.randint(1, 1292)
+        url = f"https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0"
+        response = r.get(url)
+        if response.ok:
+            data = response.json()
+            poke_url = data['results'][random_pokemon]['url']
+            print(poke_url)
+            info_url = poke_url
+            new_response = r.get(info_url)
+            if new_response.ok:
+                rand_poke_info = new_response.json()
+    
+                return {
+                    'name': data['results'][random_pokemon]['name'],
+                    'base hp stat': rand_poke_info['stats'][0]['base_stat'],
+                    'base defense': rand_poke_info['stats'][2]['base_stat'],
+                    'base attack': rand_poke_info['stats'][1]['base_stat'],
+                    'image': rand_poke_info['sprites']['front_shiny'],
+                    'ability': rand_poke_info['abilities'][0]['ability']['name']
+                }
+            
+# for /catchpokemons          
+def determine_if_caught():
+    import random
+    # determine whether or not the pokemon was caught
+    determiner = random.randint(1,2)
+    return determiner
+
+@app.route('/catchpokemons', methods=['GET', 'POST'])
+@login_required
+def catch_pokemons():
+    form = CatchPokemonForm()
+    rand_pokemon_dict = {}
+    user_id = current_user.id
+    pokemon_name = session.get('pokemon_name')
+
+    num_pokemon_caught = CatchPokemon.query.filter_by(user_id=user_id).count()
+
+    if num_pokemon_caught >= 10:
+        flash('You can not catch more than 10 Pokemon!', 'warning')
+        return redirect(url_for('pokemoninfo'))
+
+    if request.method == 'POST':
+        if 'find_pokemon' in request.form:
+            rand_pokemon_dict = get_random_pokemon()
+            pokemon_name = rand_pokemon_dict.get('name')
+            session['pokemon_name'] = pokemon_name
+
+        elif 'catch_pokemon' in request.form:
+            if not pokemon_name:
+                flash('You need to find a pokemon first!', 'danger')
+                return redirect(url_for('catch_pokemons'))
+            
+            caught_or_not = determine_if_caught()
+
+            if caught_or_not == 1:
+                # pokemon is caught
+                already_caught = CatchPokemon.query.filter_by(user_id=user_id, pokemon_name=pokemon_name).first()
+
+                if already_caught:
+                    flash('You already have this pokemon.', 'danger')
+                    return redirect(url_for('catchpokemons'))
+                
+                else:
+                    new_pokemon = CatchPokemon(pokemon_name=pokemon_name, user_id=user_id)
+                    db.session.add(new_pokemon)
+                    db.session.commit()
+                    flash(f'You caught {pokemon_name.title()}!', 'success')
+                    session.pop('pokemon_name', None)
+                return redirect('catchpokemons')
+
+            else:
+                flash(f'Dang! {pokemon_name.title()} escaped!', 'danger')
+                session.pop('pokemon_name', None)
+                return redirect(url_for('catch_pokemons'))
+
+    return render_template('catchpokemons.html', form=form, rand_pokemon_info=rand_pokemon_dict)
