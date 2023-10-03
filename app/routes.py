@@ -180,7 +180,6 @@ def get_random_pokemon():
         if response.ok:
             data = response.json()
             poke_url = data['results'][random_pokemon]['url']
-            print(poke_url)
             info_url = poke_url
             new_response = r.get(info_url)
             if new_response.ok:
@@ -188,9 +187,9 @@ def get_random_pokemon():
     
                 return {
                     'name': data['results'][random_pokemon]['name'],
-                    'base hp stat': rand_poke_info['stats'][0]['base_stat'],
-                    'base defense': rand_poke_info['stats'][2]['base_stat'],
-                    'base attack': rand_poke_info['stats'][1]['base_stat'],
+                    'base_hp_stat': rand_poke_info['stats'][0]['base_stat'],
+                    'base_defense': rand_poke_info['stats'][2]['base_stat'],
+                    'base_attack': rand_poke_info['stats'][1]['base_stat'],
                     'image': rand_poke_info['sprites']['front_shiny'],
                     'ability': rand_poke_info['abilities'][0]['ability']['name']
                 }
@@ -202,14 +201,26 @@ def determine_if_caught():
     determiner = random.randint(1,2)
     return determiner
 
+
 @app.route('/catchpokemons', methods=['GET', 'POST'])
 @login_required
 def catch_pokemons():
     form = CatchPokemonForm()
-    rand_pokemon_dict = {}
     user_id = current_user.id
-    pokemon_name = session.get('pokemon_name')
+    rand_pokemon_dict = {}
+    
+    rand_pokemon_dict = session.get('rand_pokemon_dict')
 
+    if not rand_pokemon_dict:
+        rand_pokemon_dict = get_random_pokemon()
+        session['rand_pokemon_dict'] = rand_pokemon_dict
+
+    pokemon_name = rand_pokemon_dict.get('name')
+    base_hp = rand_pokemon_dict.get('base_hp_stat')
+    base_defense = rand_pokemon_dict.get('base_defense')
+    base_attack = rand_pokemon_dict.get('base_attack')
+    image = rand_pokemon_dict.get('image')
+    ability = rand_pokemon_dict.get('ability')
     num_pokemon_caught = CatchPokemon.query.filter_by(user_id=user_id).count()
 
     if num_pokemon_caught >= 10:
@@ -218,11 +229,12 @@ def catch_pokemons():
 
     if request.method == 'POST':
         if 'find_pokemon' in request.form:
+            # Generate a new rand_pokemon_dict and update it in the session
             rand_pokemon_dict = get_random_pokemon()
-            pokemon_name = rand_pokemon_dict.get('name')
-            session['pokemon_name'] = pokemon_name
-
-        elif 'catch_pokemon' in request.form:
+            session['rand_pokemon_dict'] = rand_pokemon_dict
+            return redirect('catchpokemons')
+        
+        if 'catch_pokemon' in request.form:
             if not pokemon_name:
                 flash('You need to find a pokemon first!', 'danger')
                 return redirect(url_for('catch_pokemons'))
@@ -238,16 +250,48 @@ def catch_pokemons():
                     return redirect(url_for('catchpokemons'))
                 
                 else:
-                    new_pokemon = CatchPokemon(pokemon_name=pokemon_name, user_id=user_id)
+                    new_pokemon = CatchPokemon(pokemon_name, base_hp,
+                                            base_defense, base_attack, 
+                                            image, ability, user_id)
                     db.session.add(new_pokemon)
                     db.session.commit()
                     flash(f'You caught {pokemon_name.title()}!', 'success')
-                    session.pop('pokemon_name', None)
+                    session.pop('rand_pokemon_dict', None)
                 return redirect('catchpokemons')
 
             else:
                 flash(f'Dang! {pokemon_name.title()} escaped!', 'danger')
-                session.pop('pokemon_name', None)
+                session.pop('rand_pokemon_dict', None)
                 return redirect(url_for('catch_pokemons'))
 
     return render_template('catchpokemons.html', form=form, rand_pokemon_info=rand_pokemon_dict)
+
+
+def get_users_pokemon(user_id):
+    try:
+        users_pokemon = CatchPokemon.query.filter_by(user_id=user_id).all()
+        return users_pokemon
+    except Exception:
+        return []
+
+
+@app.route('/pokedex', methods=['GET', 'POST'])
+@login_required
+def pokedex():
+    user_id = current_user.id 
+    users_pokemons = get_users_pokemon(user_id)
+
+    if request.method == 'POST' and "release" in request.form:
+        pokemon_id = request.form.get('pokemon_id')
+        released_pokemon = CatchPokemon.query.get(pokemon_id)
+
+        if released_pokemon:
+            db.session.delete(released_pokemon)
+            db.session.commit()
+
+        return redirect(url_for('pokedex'))
+
+        
+
+
+    return render_template('pokedex.html', users_pokemons=users_pokemons)

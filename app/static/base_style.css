@@ -48,3 +48,26 @@ body {
     max-width: calc(33.33% - 10px); /* Adjust the width as needed and consider margin/padding */
     margin: 5px; 
 }
+
+#pokedex-card {
+    border: 3px solid black;
+    border-radius: 10px;
+    background-color: #0a6cff;
+}
+
+#pokedex-body {
+    border: 3px solid black;
+    border-radius: 10px;
+}
+
+.empty-pokedex {
+    display: flex;
+    flex-direction: column;
+    justify-content: top; /* Vertical centering */
+    align-items: flex-start; /* Move to the left */
+    height: 100vh;
+    background-image: url('./empty-pokedex.jpg');
+    color: white;
+    padding-left: 100px;
+    padding-top: 100px;
+}

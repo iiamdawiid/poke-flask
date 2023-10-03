@@ -5,9 +5,9 @@
     <h1>Catch Pokemons</h1>
     {% if rand_pokemon_info %}
         <b>{{ "NAME: " }}</b> {{ rand_pokemon_info['name'].title() }}<br>
-        <b>{{ "BASE HP: " }}</b> {{ rand_pokemon_info['base hp stat'] }}<br>
-        <b>{{ "BASE DEFENSE: " }}</b> {{ rand_pokemon_info['base defense'] }}<br>
-        <b>{{ "BASE ATTACK: " }}</b> {{ rand_pokemon_info['base attack'] }}<br>
+        <b>{{ "BASE HP: " }}</b> {{ rand_pokemon_info['base_hp_stat'] }}<br>
+        <b>{{ "BASE DEFENSE: " }}</b> {{ rand_pokemon_info['base_defense'] }}<br>
+        <b>{{ "BASE ATTACK: " }}</b> {{ rand_pokemon_info['base_attack'] }}<br>
         <b>{{ "ABILITY: " }}</b> {{ rand_pokemon_info['ability'].title() }}<br>
         <img src="{{ rand_pokemon_info['image'] }}" alt="{{ rand_pokemon_info['name'].title() }} Image"><br>
     

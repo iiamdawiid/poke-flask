@@ -20,8 +20,18 @@ class User(db.Model, UserMixin):
 class CatchPokemon(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     pokemon_name = db.Column(db.String(50))
+    base_hp = db.Column(db.Integer)
+    base_defense = db.Column(db.Integer)
+    base_attack = db.Column(db.Integer)
+    image = db.Column(db.String(200))
+    ability = db.Column(db.String(50))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-    def __init__(self, pokemon_name, user_id):
+    def __init__(self, pokemon_name, base_hp, base_defense, base_attack, image, ability, user_id):
         self.pokemon_name = pokemon_name
+        self.base_hp = base_hp
+        self.base_defense = base_defense 
+        self.base_attack = base_attack
+        self.image = image
+        self.ability = ability
         self.user_id = user_id
