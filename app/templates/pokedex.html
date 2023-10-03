@@ -13,16 +13,6 @@
     {% for pokemon in users_pokemons %}
     <div class="container mt-3 mb-3">
         <div class="row justify-content-center">
-          <!-- <div id="pokedex-card" class="card" style="width: 18rem;">
-            <img src="{{ pokemon.image }}" class="card-img-top" alt="{{ pokemon.name }}">
-            <div class="card-body">
-              <h5 class="card-title">{{ pokemon.pokemon_name.title() }}</h5>
-              <p class="card-text"><b>Base HP:</b> {{ pokemon.base_hp }}</p>
-              <p class="card-text"><b>Base Defense:</b> {{ pokemon.base_defense }}</p>
-              <p class="card-text"><b>Base Attack:</b> {{ pokemon.base_attack }}</p>
-              <a href="#" class="btn btn-primary, btn-danger" name="delete_pokemon">Go somewhere</a>
-            </div>
-          </div> -->
           <div id="pokedex-card" class="card" style="width: 20rem;">
             <div class="card-body">
               <h5 class="card-title"><b>{{ pokemon.pokemon_name.title() }}</b></h5>
@@ -62,9 +52,6 @@
             </div>
           </div>
         </div>
-      </div>
+    </div>
     {% endfor %}
-        
-    
-
 {% endblock %}

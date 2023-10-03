@@ -10,6 +10,7 @@ from flask_login import login_user, logout_user, current_user, login_required
 def index():
     return render_template('index.html')
 
+
 # for /pokemoninfo
 def get_pokemon(poke_name):
         poke_name = poke_name.lower()
@@ -123,6 +124,7 @@ def logout():
     flash('You have been logged out.', 'success')
     return redirect(url_for('login'))
 
+
 @app.route("/editprofile", methods=['GET', 'POST'])
 @login_required
 def editprofile():
@@ -171,6 +173,7 @@ def editprofile():
  
     return render_template('editprofile.html', form=form)
 
+
 # for /catchpokemons       
 def get_random_pokemon():
         import random
@@ -193,14 +196,14 @@ def get_random_pokemon():
                     'image': rand_poke_info['sprites']['front_shiny'],
                     'ability': rand_poke_info['abilities'][0]['ability']['name']
                 }
-            
+        
+
 # for /catchpokemons          
 def determine_if_caught():
     import random
     # determine whether or not the pokemon was caught
     determiner = random.randint(1,2)
     return determiner
-
 
 @app.route('/catchpokemons', methods=['GET', 'POST'])
 @login_required
@@ -266,7 +269,6 @@ def catch_pokemons():
 
     return render_template('catchpokemons.html', form=form, rand_pokemon_info=rand_pokemon_dict)
 
-
 def get_users_pokemon(user_id):
     try:
         users_pokemon = CatchPokemon.query.filter_by(user_id=user_id).all()
@@ -275,6 +277,7 @@ def get_users_pokemon(user_id):
         return []
 
 
+# fix pokemon release - RELEASING INCORRECT POKEMONS
 @app.route('/pokedex', methods=['GET', 'POST'])
 @login_required
 def pokedex():
@@ -290,8 +293,5 @@ def pokedex():
             db.session.commit()
 
         return redirect(url_for('pokedex'))
-
-        
-
 
     return render_template('pokedex.html', users_pokemons=users_pokemons)

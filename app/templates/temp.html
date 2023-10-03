@@ -1,0 +1,26 @@
+<!-- {% extends 'base.html' %}
+
+{% block content %}
+<div id="forms" class="container col-4 border mt-5 border border-2 border-dark rounded">
+    <h1>Catch Pokemons</h1>
+    {% if rand_pokemon_info %}
+        <b>{{ "NAME: " }}</b> {{ rand_pokemon_info['name'].title() }}<br>
+        <b>{{ "BASE HP: " }}</b> {{ rand_pokemon_info['base_hp_stat'] }}<br>
+        <b>{{ "BASE DEFENSE: " }}</b> {{ rand_pokemon_info['base_defense'] }}<br>
+        <b>{{ "BASE ATTACK: " }}</b> {{ rand_pokemon_info['base_attack'] }}<br>
+        <b>{{ "ABILITY: " }}</b> {{ rand_pokemon_info['ability'].title() }}<br>
+        <img src="{{ rand_pokemon_info['image'] }}" alt="{{ rand_pokemon_info['name'].title() }} Image"><br>
+    
+    {% endif %}
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        
+        <div class="d-grid gap-2 my-3">
+            <button type="submit" class="btn btn-primary border border-1 border-dark" formaction="/catchpokemons" name="find_pokemon">Find Pokemon</button>
+            
+            <button type="submit" class="btn btn-success border border-1 border-dark" formaction="/catchpokemons" name="catch_pokemon">Catch</button>
+                
+        </div>
+    </form>
+</div>
+{% endblock %} -->
