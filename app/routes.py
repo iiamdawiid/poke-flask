@@ -226,9 +226,9 @@ def catch_pokemons():
     ability = rand_pokemon_dict.get('ability')
     num_pokemon_caught = CatchPokemon.query.filter_by(user_id=user_id).count()
 
-    if num_pokemon_caught >= 10:
-        flash('You can not catch more than 10 Pokemon!', 'warning')
-        return redirect(url_for('pokemoninfo'))
+    if num_pokemon_caught >= 5:
+        flash('You can not catch more than 5 Pokemon!', 'warning')
+        return redirect(url_for('pokedex'))
 
     if request.method == 'POST':
         if 'find_pokemon' in request.form:
