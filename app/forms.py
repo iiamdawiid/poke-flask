@@ -28,8 +28,6 @@ class EditProfileForm(FlaskForm):
     submit = SubmitField()
 
 class CatchPokemonForm(FlaskForm):
-    # first get random pokemon and display its info
-    # below will be button for catch or pass
     find_pokemon = SubmitField()
     catch = SubmitField()
     no_catch = SubmitField()

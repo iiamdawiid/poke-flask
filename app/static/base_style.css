@@ -8,6 +8,44 @@ body {
     z-index: 100;
 }
 
+.navbar-logo {
+    width: 40px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.navbar-logo {
+    transition: transform 0.3s ease; 
+}
+
+.hover-zoom-logo:hover {
+    transform: scale(1.5); 
+}
+
+.hover-zoom:hover {
+    transform: scale(1.1); 
+}
+
+.edit-profile {
+    transition: transform 0.3s ease;
+}
+
+.catch-pokemon {
+    transition: transform 0.3s ease;
+}
+
+.poke-dex {
+    transition: transform 0.3s ease;
+}
+
+.logout {
+    transition: transform 0.3s ease;
+}
+
+.battle {
+    transition: transform 0.3s ease;
+}
+
 #forms {
     background-color: white;
     box-shadow: 0px 10px 50px blue;
@@ -42,12 +80,12 @@ body {
 .image-row {
     display: flex;
     justify-content: space-between;
-    flex-wrap: wrap; /* Allow images to wrap to the next line if necessary */
+    flex-wrap: wrap; 
     padding: 90px 0; 
 }
 
 .image-row img {
-    max-width: calc(33.33% - 10px); /* Adjust the width as needed and consider margin/padding */
+    max-width: calc(33.33% - 10px); 
     margin: 5px; 
 }
 
@@ -65,8 +103,8 @@ body {
 .empty-pokedex {
     display: flex;
     flex-direction: column;
-    justify-content: top; /* Vertical centering */
-    align-items: flex-start; /* Move to the left */
+    justify-content: top; 
+    align-items: flex-start; 
     height: 100vh;
     background-image: url('./empty-pokedex.jpg');
     color: white;

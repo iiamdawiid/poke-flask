@@ -283,6 +283,7 @@ def get_users_pokemon(user_id):
 def pokedex():
     user_id = current_user.id 
     users_pokemons = get_users_pokemon(user_id)
+    
 
     if request.method == 'POST' and "release" in request.form:
         pokemon_id = request.form.get('pokemon_id')
