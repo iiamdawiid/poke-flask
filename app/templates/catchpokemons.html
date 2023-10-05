@@ -6,7 +6,7 @@
         <div class="row justify-content-center">
             <div id="cp-card" class="card" style="width: 27rem;">
                 <h4 class="card-title pt-3"><b>{{ rand_pokemon_info['name'].title() }}</b></h4>
-                <img style="border: 3px solid black; border-radius: 10px; background-color: #f2f1ed;" class="card-img-top mb-2" src="{{ rand_pokemon_info['image'] }}" alt="{{ rand_pokemon_info['name'].title() }} Image">
+                <img style="border: 3px solid black; border-radius: 10px; background-image: url('../static/card-bg.jpg');" class="card-img-top mb-2" src="{{ rand_pokemon_info['image'] }}" alt="{{ rand_pokemon_info['name'].title() }} Image">
                 <ul id="cp-body" class="list-group list-group-flush">
                     <li style = "background-color: #9c66f8;" class="list-group-item"><b>Base Defense:</b> {{ rand_pokemon_info['base_defense'] }}</li>
                     <li style = "background-color: #f42e4f;" class="list-group-item"><b>Base Attack:</b> {{ rand_pokemon_info['base_attack'] }}</li>

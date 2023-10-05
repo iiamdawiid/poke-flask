@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Battle Page</h1>
+
+    <h2>Users and Their Pokémon</h2>
+
+    <ul>
+        {% for user, pokemons in user_pokemons.items() %}
+            <li>
+                <strong>User: {{ user.first_name }} {{ user.last_name }}</strong>
+                <ul>
+                    {% for pokemon in pokemons %}
+                        <li>
+                            <strong>Pokémon Name:</strong> {{ pokemon.pokemon_name }}<br>
+                            <strong>Base HP:</strong> {{ pokemon.base_hp }}<br>
+                            <strong>Base Defense:</strong> {{ pokemon.base_defense }}<br>
+                            <strong>Base Attack:</strong> {{ pokemon.base_attack }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

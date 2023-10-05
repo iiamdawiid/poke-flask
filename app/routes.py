@@ -132,7 +132,10 @@ def editprofile():
     if request.method == 'POST':
         if 'delete_account' in request.form:
             deleted_user = User.query.get(current_user.id)
+            # delete the pokemon that were caught by user from CaughtPokemon database
             CatchPokemon.query.filter_by(user_id=current_user.id).delete()
+            # delete user's team when deleting profile
+            # Team.query.filter_by(user_id=current_user.id).delete()
             db.session.delete(deleted_user)
             db.session.commit()
 
@@ -250,7 +253,7 @@ def catch_pokemons():
 
                 if already_caught:
                     flash('You already have this pokemon.', 'danger')
-                    return redirect(url_for('catchpokemons'))
+                    return redirect(url_for('catch_pokemons'))
                 
                 else:
                     new_pokemon = CatchPokemon(pokemon_name, base_hp,
@@ -258,6 +261,13 @@ def catch_pokemons():
                                             image, ability, user_id)
                     db.session.add(new_pokemon)
                     db.session.commit()
+
+                    # adding the caught pokemon to user's team
+                    # pokemon_id = new_pokemon.id
+                    # team_update = Team(user_id, pokemon_id)
+                    # db.session.add(team_update)
+                    # db.session.commit()
+
                     flash(f'You caught {pokemon_name.title()}!', 'success')
                     session.pop('rand_pokemon_dict', None)
                 return redirect('catchpokemons')
@@ -277,7 +287,6 @@ def get_users_pokemon(user_id):
         return []
 
 
-# fix pokemon release - RELEASING INCORRECT POKEMONS
 @app.route('/pokedex', methods=['GET', 'POST'])
 @login_required
 def pokedex():
@@ -287,12 +296,32 @@ def pokedex():
 
     if request.method == 'POST' and "release" in request.form:
         pokemon_id = request.form.get('pokemon_id')
+        print("Received pokemon_id:", pokemon_id)
         released_pokemon = CatchPokemon.query.get(pokemon_id)
 
         if released_pokemon:
-            db.session.delete(released_pokemon)
+            # db.session.delete(released_pokemon)
+            CatchPokemon.query.filter_by(id=pokemon_id).delete()
+            # Team.query.filter_by(pokemon_id=pokemon_id).delete()
             db.session.commit()
 
         return redirect(url_for('pokedex'))
 
     return render_template('pokedex.html', users_pokemons=users_pokemons)
+
+
+@app.route('/battle', methods=['GET', 'POST'])
+def battle():
+    users = User.query.all()
+
+    # Create a dictionary to store each user's caught Pokémon
+    user_pokemons = {}
+
+    for user in users:
+        # Query Pokémon caught by each user
+        pokemons = CatchPokemon.query.filter_by(user_id=user.id).all()
+
+        # Store the user's Pokémon in the dictionary
+        user_pokemons[user] = pokemons
+
+    return render_template('battle.html', user_pokemons=user_pokemons)

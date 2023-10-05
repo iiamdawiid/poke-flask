@@ -13,45 +13,45 @@
     {% for pokemon in users_pokemons %}
     <div class="container mt-3 mb-3">
         <div class="row justify-content-center">
-          <div id="pokedex-card" class="card" style="width: 20rem;">
+        <div id="pokedex-card" class="card" style="width: 20rem;">
             <div class="card-body">
-              <h5 class="card-title"><b>{{ pokemon.pokemon_name.title() }}</b></h5>
-              <p class="card-text"></p>
+                <h5 class="card-title"><b>{{ pokemon.pokemon_name.title() }}</b></h5>
+                <p class="card-text"></p>
             </div>
-            <img style="border: 3px solid black; border-radius: 10px; background-color: #f2f1ed;" src="{{ pokemon.image }}" class="card-img-top mb-2" alt="{{ pokemon.name }}">
+            <img style="border: 3px solid black; border-radius: 10px; background-image: url('../static/card-bg.jpg');" src="{{ pokemon.image }}" class="card-img-top mb-2" alt="{{ pokemon.name }}">
             <ul id="pokedex-body" class="list-group list-group-flush">
-              <li style = "background-color: #9c66f8" class="list-group-item"><b>Base Defense:</b> {{ pokemon.base_defense }}</li>
-              <li style = "background-color: #f42e4f;" class="list-group-item"><b>Base Attack:</b> {{ pokemon.base_attack }}</li>
-              <li style = "background-color: #4ef55c;" class="list-group-item"><b>Base HP:</b> {{ pokemon.base_hp }}</li>
+                <li style = "background-color: #9c66f8" class="list-group-item"><b>Base Defense:</b> {{ pokemon.base_defense }}</li>
+                <li style = "background-color: #f42e4f;" class="list-group-item"><b>Base Attack:</b> {{ pokemon.base_attack }}</li>
+                <li style = "background-color: #4ef55c;" class="list-group-item"><b>Base HP:</b> {{ pokemon.base_hp }}</li>
             </ul>
             <div class="card-body">
                 
-                <button type="button" id="deleteAccountButton" class="btn btn-danger border border-2 border-dark" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Release</button>
+                <button type="button" id="deleteAccountButton{{ pokemon.id }}" class="btn btn-danger border border-2 border-dark" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{ pokemon.id }}">Release</button>
                 
-                <!-- Modal -->
-                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <!-- Modal | each pokemon needs his own id attached -->
+                <div class="modal fade" id="staticBackdrop{{ pokemon.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel{{ pokemon.id }}" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel">Are you sure you want to release?</h5>
+                        <h5 class="modal-title" id="staticBackdropLabel{{ pokemon.id }}">Are you sure you want to release?</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        You will lose your pokemon.
+                        You will lose your Pokémon.
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary border border-1 border-dark" data-bs-dismiss="modal">Close</button>    
                         <form method="POST" action="/pokedex">
                             <input type="hidden" name="pokemon_id" value="{{ pokemon.id }}">
-                            <button type="submit" class="btn btn-danger border border-1 border-dark" name="release">Release Pokemon</button>
+                            <button type="submit" class="btn btn-danger border border-1 border-dark" name="release">Release Pokémon</button>
                         </form>
                     </div>
                     </div>
                 </div>
                 </div>
             </div>
-          </div>
+        </div>
         </div>
     </div>
-    {% endfor %}
+{% endfor %}
 {% endblock %}

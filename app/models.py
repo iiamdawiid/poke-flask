@@ -35,3 +35,13 @@ class CatchPokemon(db.Model):
         self.image = image
         self.ability = ability
         self.user_id = user_id
+
+# new - will consist of a user's pokemon that can battle
+# class Team(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     pokemon_id = db.Column(db.Integer)
+#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+#     def __init__(self, user_id, pokemon_id):
+#         self.pokemon_id = pokemon_id
+#         self.user_id = user_id
