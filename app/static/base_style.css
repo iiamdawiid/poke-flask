@@ -52,7 +52,7 @@ body {
 }
 
 .content-container {
-    background-color: rgba(255, 255, 255, 0.9); 
+    background-color: rgba(85, 84, 84, 0.95); 
     padding: 20px; 
     position: absolute;
     top: 0;
@@ -61,21 +61,14 @@ body {
     width: 65%; 
     min-height: 100vh; 
     z-index: 1;
-    border: 1px solid black;
+    border: 3px solid black;
     box-shadow: 0px 10px 100px yellow;
 }
 
 .centered-content {
     text-align: center;
-    margin-top: 80px;
+    margin-top: 40px;
 }
-
-/* .pika-img {
-    max-width: 50%; 
-    max-height: 50%; 
-    display: block; 
-    margin: 0 auto;
-} */
 
 .image-row {
     display: flex;
@@ -121,4 +114,58 @@ body {
 #cp-body {
     border: 3px solid black;
     border-radius: 10px;
+}
+
+.card {
+    width: 100%;          
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.top-battle-page {
+    background-color: black;
+    text-align: center;
+    padding-bottom: 5px;
+}
+
+.content-container-battle { 
+    margin-top: 175px;
+    padding: 20px; 
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 65%; 
+    min-height: 100vh; 
+    z-index: 1;
+}
+
+.card-glow {
+    box-shadow: 0px 0px 25px 5px red;
+    background-color: rgb(40, 40, 40);
+    color: white;
+}
+
+#battle-list-items {
+    padding-top: 10px;
+    padding-left: 20px;
+    padding-bottom: 10px;
+    padding-right: 20px;
+    list-style: none;
+    display: flex;             
+    justify-content: space-between; 
+    align-items: center;
+}
+
+#battle-list-items img {
+    flex-shrink: 0;            
+}
+
+.hover-zoom-card {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; 
+}
+
+.hover-zoom-card:hover {
+    transform: scale(1.115);
+    box-shadow: 0px 0px 35px 15px yellow;
 }

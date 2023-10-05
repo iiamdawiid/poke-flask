@@ -13,15 +13,15 @@
     {% for pokemon in users_pokemons %}
     <div class="container mt-3 mb-3">
         <div class="row justify-content-center">
-        <div id="pokedex-card" class="card" style="width: 20rem;">
+        <div id="pokedex-card" class="card hover-zoom-card hover-zoom" style="width: 20rem;">
             <div class="card-body">
                 <h5 class="card-title"><b>{{ pokemon.pokemon_name.title() }}</b></h5>
                 <p class="card-text"></p>
             </div>
             <img style="border: 3px solid black; border-radius: 10px; background-image: url('../static/card-bg.jpg');" src="{{ pokemon.image }}" class="card-img-top mb-2" alt="{{ pokemon.name }}">
             <ul id="pokedex-body" class="list-group list-group-flush">
-                <li style = "background-color: #9c66f8" class="list-group-item"><b>Base Defense:</b> {{ pokemon.base_defense }}</li>
                 <li style = "background-color: #f42e4f;" class="list-group-item"><b>Base Attack:</b> {{ pokemon.base_attack }}</li>
+                <li style = "background-color: #9c66f8" class="list-group-item"><b>Base Defense:</b> {{ pokemon.base_defense }}</li>
                 <li style = "background-color: #4ef55c;" class="list-group-item"><b>Base HP:</b> {{ pokemon.base_hp }}</li>
             </ul>
             <div class="card-body">

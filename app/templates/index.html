@@ -7,29 +7,73 @@
         <br>
         <br>
         <div class="centered-content">
-            <h1 style="color: #07d600; text-align: center;">Welcome!</h1>
-            <h3>Catch some Pokemon and battle other people!</h3>
+            <h1 style="color: white; text-align: center;">Welcome!</h1>
+            <h3 style="color: #07d600" class="mb-5">Catch some Pokemon and battle other people!</h3>
         </div>
-
-        <div class="image-row">
-            <img src="../static/pikachu1.png" alt="Image 1">
-            <img src="../static/pikachu2.png" alt="Image 2">
-            <img src="../static/pikachu1-flipped.png" alt="Image 3">
-        </div>
+        <div style="border: 3px solid black;" id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="../static/slide2.3.jpg" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item">
+                <img src="../static/slide2.1.jpeg" class="d-block w-100" alt="...">
+              </div>
+              <div class="carousel-item">
+                <img src="../static/slide2.2.jpg" class="d-block w-100" alt="...">
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
     {% else %}
         <br>
         <br>
         <div class="centered-content">
-            <h1>Pokemon Flask Application!</h1>
-            <h4 style="color: red;">Click Get Started at the top to Sign Up or Log In!</h4>
-            <h5>temporary home page - create a better home page later</h5>
+            <h1 style="color: white;">PokeFlask</h1>
+            <h4 class="mb-5" style="color: #07d600;">Click Get Started at the top to Sign Up or Log In!</h4>
         </div>
-        
-        <div class="image-row">
-            <img src="../static/pikachu1.png" alt="Image 1">
-            <img src="../static/pikachu2.png" alt="Image 2">
-            <img src="../static/pikachu1-flipped.png" alt="Image 3">
-        </div>
+        <div style="border: 3px solid black;" id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="../static/slide1.png" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5 class="fs-1 pb-2" style="color: #07d600; background-color: black; opacity: 0.9;">Find and capture Pokemon!</h5>
+                </div>
+              </div>
+              <div class="carousel-item">
+                <img src="../static/slide2.png" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5 class="fs-1 pb-2" style="color: #07d600; background-color: black; opacity: 0.9;">View them in your Pokedex!</h5>
+                </div>
+              </div>
+              <div class="carousel-item">
+                <img src="../static/slide3.png" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5 class="fs-1 pb-2" style="color: #07d600; background-color: black; opacity: 0.9;">Battle other players!</h5>
+                </div>
+              </div>
+              <div class="carousel-item">
+                <img src="../static/slide4.png" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5 class="fs-1 pb-2" style="color: #07d600; background-color: black; opacity: 0.9;">Sign up now to play!</h5>
+                </div>
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
     {% endif %}
 </div>
 

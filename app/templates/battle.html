@@ -1,25 +1,33 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Battle Page</h1>
+<div class="top-battle-page">
+    <h1 style="color: red;">Battle!</h1>
+    <h3 style="color: white;">Challenge other users if you think you can win!</h3>
+</div>
 
-    <h2>Users and Their Pokémon</h2>
-
-    <ul>
-        {% for user, pokemons in user_pokemons.items() %}
-            <li>
-                <strong>User: {{ user.first_name }} {{ user.last_name }}</strong>
-                <ul>
-                    {% for pokemon in pokemons %}
-                        <li>
-                            <strong>Pokémon Name:</strong> {{ pokemon.pokemon_name }}<br>
-                            <strong>Base HP:</strong> {{ pokemon.base_hp }}<br>
-                            <strong>Base Defense:</strong> {{ pokemon.base_defense }}<br>
-                            <strong>Base Attack:</strong> {{ pokemon.base_attack }}
-                        </li>
-                    {% endfor %}
-                </ul>
+<div class="content-container-battle" style="z-index: -1;">
+{% for user, pokemons in user_pokemons.items() %}       
+<div class="card" style="width: 100%;">
+    <div class="card-body card-glow">
+        <h5 class="card-title"><strong>{{ user.first_name }} {{ user.last_name }}</strong></h5>
+        {% for pokemon in pokemons %}
+        <p class="card-text">
+            <li id="battle-list-items" style="border: 1px solid white;">
+                <img src="{{ pokemon.image }}">
+                <strong style="color: #2e7df4;">Pokémon:</strong> {{ pokemon.pokemon_name.title() }}
+                <strong style="color: #f42e4f;">Base Attack:</strong> <b>{{ pokemon.base_attack }}</b>
+                <strong style="color: #9c66f8;">Base Defense:</strong> <b>{{ pokemon.base_defense }}</b>
+                <strong style="color: #4ef55c;">Base HP:</strong> <b>{{ pokemon.base_hp }}</b>
             </li>
+        </p>
         {% endfor %}
-    </ul>
+        
+        <button type="button" class="btn btn-danger btn-lg">CHALLENGE</button>
+        
+    </div>
+</div>
+
+{% endfor %}
+</div> 
 {% endblock %}
