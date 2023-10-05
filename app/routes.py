@@ -262,12 +262,6 @@ def catch_pokemons():
                     db.session.add(new_pokemon)
                     db.session.commit()
 
-                    # adding the caught pokemon to user's team
-                    # pokemon_id = new_pokemon.id
-                    # team_update = Team(user_id, pokemon_id)
-                    # db.session.add(team_update)
-                    # db.session.commit()
-
                     flash(f'You caught {pokemon_name.title()}!', 'success')
                     session.pop('rand_pokemon_dict', None)
                 return redirect('catchpokemons')
@@ -279,13 +273,14 @@ def catch_pokemons():
 
     return render_template('catchpokemons.html', form=form, rand_pokemon_info=rand_pokemon_dict)
 
+
+# for /pokedex
 def get_users_pokemon(user_id):
     try:
         users_pokemon = CatchPokemon.query.filter_by(user_id=user_id).all()
         return users_pokemon
     except Exception:
         return []
-
 
 @app.route('/pokedex', methods=['GET', 'POST'])
 @login_required
@@ -300,12 +295,13 @@ def pokedex():
         released_pokemon = CatchPokemon.query.get(pokemon_id)
 
         if released_pokemon:
-            # db.session.delete(released_pokemon)
+            flash(f'{released_pokemon.pokemon_name.title()} was released!', 'success')
             CatchPokemon.query.filter_by(id=pokemon_id).delete()
-            # Team.query.filter_by(pokemon_id=pokemon_id).delete()
             db.session.commit()
 
         return redirect(url_for('pokedex'))
+    
+    users_pokemons.sort(key=lambda x: x.base_attack, reverse=True)
 
     return render_template('pokedex.html', users_pokemons=users_pokemons)
 
