@@ -169,3 +169,7 @@ body {
     transform: scale(1.115);
     box-shadow: 0px 0px 35px 15px yellow;
 }
+
+.custom-modal {
+    z-index: 1000; /* Adjust the value as needed */
+}
