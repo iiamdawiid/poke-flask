@@ -30,7 +30,6 @@ class EditProfileForm(FlaskForm):
 class CatchPokemonForm(FlaskForm):
     find_pokemon = SubmitField()
     catch = SubmitField()
-    # no_catch = SubmitField()
 
 class ReleasePokemonForm(FlaskForm):
     release = SubmitField()

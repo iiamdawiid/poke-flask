@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container mt-3 mb-3">
+    <div class="row justify-content-center">
+        <div id="br-card" class="card" style="width: 27rem;">
+            <h4 class="card-title pt-3"><b>Strongest Pokemon:</b></h4>
+            <h5 style="color: rgb(255, 255, 255);" class="card-title pb-3"><b>{{ strongest_pokemon.pokemon_name.title() }}</b></h5>
+            <img style="border: 3px solid black; border-radius: 10px; background-image: url('../static/card-bg.jpg');" class="card-img-top mb-2" src="{{ strongest_pokemon.image }}" alt="{{ strongest_pokemon.pokemon_name.title() }} Image">
+            <ul id="cp-body" class="list-group list-group-flush">
+                <li class="list-group-item"><b>{{ result }}</b></li>
+            </ul>
+            <div class="card-body">
+                <form action="/battle/challenge" method="POST" class="text-center mt-3">
+                    <button class="btn btn-danger btn-lg border border-2 border-dark" type="submit" name="battle_again">Find More Battles</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

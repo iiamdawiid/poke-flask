@@ -22,13 +22,16 @@
             </li>
         </p>
         {% endfor %}
-        <form action="/battleresult">
-            <button type="button" class="btn btn-danger btn-lg" value="{{ user.id }}">CHALLENGE</button>
+        <form action="/battle/challenge" method="POST">
+            <div>
+                <p>{{ user.username }}</p>
+                <!-- Add a hidden input field to store the user's ID -->
+                <input type="hidden" name="challenged_user_id" value="{{ user.id }}">
+                <button class="btn btn-danger btn-lg" type="submit" name="challenge_button">Challenge</button>
+            </div>
         </form>
-        
     </div>
 </div>
-
 {% endfor %}
 </div> 
 {% endblock %}

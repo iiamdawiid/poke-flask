@@ -55,8 +55,9 @@ body {
 }
 
 #forms {
+    margin-top: 100px;
     background-color: white;
-    box-shadow: 0px 10px 50px blue;
+    box-shadow: 0px 0px 50px 20px blue;
 }
 
 .content-container {
@@ -178,7 +179,18 @@ body {
     box-shadow: 0px 0px 35px 15px yellow;
 }
 
-/* not fixed */
 .custom-modal {
     z-index: 1000;
+}
+
+.result {
+    background-color: white;
+}
+
+#br-card {
+    margin-top: 50px;
+    border: 3px solid black;
+    border-radius: 10px;
+    background-color: #0a6cff;
+    box-shadow: 0px 0px 50px 30px rgb(255, 0, 0);
 }

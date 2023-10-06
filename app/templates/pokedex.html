@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
     {% if not users_pokemons %}
     <div class="empty-pokedex"> 
         <h1>You have not caught any pokemons!</h1>
         <br>
         <a href="/catchpokemons" class="btn btn-lg btn-success">Catch Pokemons</a>
     </div>
-
     {% endif %}
 
     {% for pokemon in users_pokemons %}

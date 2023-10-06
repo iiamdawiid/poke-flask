@@ -18,12 +18,6 @@ def get_pokemon(poke_name):
         response = r.get(url)
         if response.ok:
             data = response.json()
-            # pokemon name
-            # base stat for hp
-            # base stat for defense
-            # base stat for attack
-            # front_shiny (URL to the image) or any other image you like more
-            # At Least One Ability
             return {
                  'name': data['name'],
                  'base hp stat': data['stats'][0]['base_stat'],
@@ -32,7 +26,6 @@ def get_pokemon(poke_name):
                  'image': data['sprites']['front_shiny'],
                  'ability': data['abilities'][0]['ability']['name']
             }
-
 
 @app.route("/pokemoninfo", methods=["GET", "POST"], endpoint='pokemoninfo')
 @login_required
@@ -101,7 +94,6 @@ def login():
             user = User.query.filter_by(email=email).first()
 
             if user and user.password == password:
-                # session['user_id'] = user.id
                 login_user(user)
                 flash("Login Successful", 'success')
                 return redirect(url_for('index'))
@@ -132,10 +124,7 @@ def editprofile():
     if request.method == 'POST':
         if 'delete_account' in request.form:
             deleted_user = User.query.get(current_user.id)
-            # delete the pokemon that were caught by user from CaughtPokemon database
             CatchPokemon.query.filter_by(user_id=current_user.id).delete()
-            # delete user's team when deleting profile
-            # Team.query.filter_by(user_id=current_user.id).delete()
             db.session.delete(deleted_user)
             db.session.commit()
 
@@ -288,7 +277,6 @@ def pokedex():
     user_id = current_user.id 
     users_pokemons = get_users_pokemon(user_id)
     
-
     if request.method == 'POST' and "release" in request.form:
         pokemon_id = request.form.get('pokemon_id')
         print("Received pokemon_id:", pokemon_id)
@@ -302,22 +290,60 @@ def pokedex():
         return redirect(url_for('pokedex'))
     
     users_pokemons.sort(key=lambda x: x.base_attack, reverse=True)
-
     return render_template('pokedex.html', users_pokemons=users_pokemons)
 
 
 @app.route('/battle', methods=['GET', 'POST'])
 def battle():
-    users = User.query.all()
-
-    # Create a dictionary to store each user's caught Pokémon
+    users = User.query.filter(User.id != current_user.id).all()
     user_pokemons = {}
 
     for user in users:
-        # Query Pokémon caught by each user
         pokemons = CatchPokemon.query.filter_by(user_id=user.id).all()
 
-        # Store the user's Pokémon in the dictionary
         user_pokemons[user] = pokemons
 
     return render_template('battle.html', user_pokemons=user_pokemons)
+
+
+@app.route('/battle/challenge', methods=['POST'])
+def challenge():
+    challenged_user_id = request.form.get('challenged_user_id')
+    challenger_id = current_user.id
+    challenged_user = User.query.get(challenged_user_id)
+    challenger = User.query.get(challenger_id)
+
+    if request.method == 'POST' and 'battle_again' in request.form:
+        return redirect(url_for('battle'))
+    
+    else:
+        challenger_pokemons = get_users_pokemon(challenger_id)
+        challenged_user_pokemons = get_users_pokemon(challenged_user_id)
+
+        challenger_power = 0
+        for pokemon in challenger_pokemons:
+            power = pokemon.base_attack + pokemon.base_defense + pokemon.base_hp
+            if power > challenger_power:
+                challenger_power = power
+                challenger_strongest_pokemon = pokemon
+
+        challenged_user_power = 0
+        for pokemon in challenged_user_pokemons:
+            power = pokemon.base_attack + pokemon.base_defense + pokemon.base_hp
+            if power > challenged_user_power:
+                challenged_user_power = power
+                challenged_user_strongest_pokemon = pokemon
+
+        if challenger_power > challenged_user_power:
+            diff = challenger_power - challenged_user_power
+            result = f'{challenger.first_name.upper()} wins by {diff} points!'
+            strongest_pokemon = challenger_strongest_pokemon
+        elif challenger_power < challenged_user_power:
+            diff = challenged_user_power - challenger_power
+            result = f'{challenged_user.first_name.upper()} wins by {diff} points!'
+            strongest_pokemon = challenged_user_strongest_pokemon
+        else:
+            result = "It's a tie!"
+            strongest_pokemon = None
+
+    return render_template('battleresult.html', result=result, strongest_pokemon=strongest_pokemon)
