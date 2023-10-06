@@ -22,8 +22,9 @@
             </li>
         </p>
         {% endfor %}
-        
-        <button type="button" class="btn btn-danger btn-lg">CHALLENGE</button>
+        <form action="/battleresult">
+            <button type="button" class="btn btn-danger btn-lg" value="{{ user.id }}">CHALLENGE</button>
+        </form>
         
     </div>
 </div>

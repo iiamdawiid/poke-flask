@@ -13,12 +13,12 @@
         </div>
     </form>
     {% if pokemon_info %}
-        <b>{{ "NAME: " }}</b> {{ pokemon_info['name'].title() }}<br>
-        <b>{{ "BASE HP: " }}</b> {{ pokemon_info['base hp stat'] }}<br>
-        <b>{{ "BASE DEFENSE: " }}</b> {{ pokemon_info['base defense'] }}<br>
-        <b>{{ "BASE ATTACK: " }}</b> {{ pokemon_info['base attack'] }}<br>
-        <b>{{ "ABILITY: " }}</b> {{ pokemon_info['ability'].title() }}<br>
         <img src="{{ pokemon_info['image'] }}" alt="{{ pokemon_info['name'].title() }} Image"><br>
+        <b>{{ "NAME: " }}</b> {{ pokemon_info['name'].title() }}<br>
+        <b>{{ "BASE ATTACK: " }}</b> {{ pokemon_info['base attack'] }}<br>
+        <b>{{ "BASE DEFENSE: " }}</b> {{ pokemon_info['base defense'] }}<br>
+        <b>{{ "BASE HP: " }}</b> {{ pokemon_info['base hp stat'] }}<br>
+        <b>{{ "ABILITY: " }}</b> {{ pokemon_info['ability'].title() }}<br>
     
     {% endif %}
 </div>

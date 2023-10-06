@@ -46,6 +46,14 @@ body {
     transition: transform 0.3s ease;
 }
 
+.git-hub {
+    transition: transform 0.3s ease;
+}
+
+.get-started {
+    transition: transform 0.3s ease;
+}
+
 #forms {
     background-color: white;
     box-shadow: 0px 10px 50px blue;
@@ -170,6 +178,7 @@ body {
     box-shadow: 0px 0px 35px 15px yellow;
 }
 
+/* not fixed */
 .custom-modal {
-    z-index: 1000; /* Adjust the value as needed */
+    z-index: 1000;
 }
