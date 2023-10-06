@@ -294,6 +294,7 @@ def pokedex():
 
 
 @app.route('/battle', methods=['GET', 'POST'])
+@login_required
 def battle():
     users = User.query.filter(User.id != current_user.id).all()
     user_pokemons = {}
@@ -307,6 +308,7 @@ def battle():
 
 
 @app.route('/battle/challenge', methods=['POST'])
+@login_required
 def challenge():
     challenged_user_id = request.form.get('challenged_user_id')
     challenger_id = current_user.id
